@@ -20,8 +20,8 @@ module.exports = {
     updatedAt: new Date()
   },
  {
-    name: 'Ashley Galvin',
-    email: 'ashley.galvin@localhost',
+    name: 'Patrick Beach',
+    email: 'Patrick.Beach@localhost',
     createdAt: new Date ('2060-05-28 15:02:55'),
     updatedAt: new Date()
   },

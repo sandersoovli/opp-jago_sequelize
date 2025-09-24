@@ -1,13 +1,22 @@
 const db = require('../models');
 const Article = db.Article;
+const Author = db.Author; // lisa Author mudel
 const { Op } = require('sequelize');
 
 class ArticleController {
 
-    // kõik artiklid
+    // kõik artiklid koos autori nimega
     async getAllArticles(req, res) {
         try {
-            const articles = await Article.findAll();
+            const articles = await Article.findAll({
+                include: [
+                    {
+                        model: Author,
+                        as: 'author',         // peab vastama Article.js assotsiatsiooni nimele
+                        attributes: ['name']  // toob ainult autori nime
+                    }
+                ]
+            });
             res.json(articles);
         } catch (error) {
             console.error('Error fetching articles:', error);
@@ -15,11 +24,18 @@ class ArticleController {
         }
     }
 
-    // konkreetne artikkel slug-i järgi
+    // konkreetne artikkel slug-i järgi koos autori nimega
     async getArticleBySlug(req, res) {
         try {
             const article = await Article.findOne({
-                where: { slug: { [Op.eq]: req.params.slug }}  // Võid kasutada ka { [Op.eq]: req.params.slug } kui soovid
+                where: { slug: { [Op.eq]: req.params.slug } },
+                include: [
+                    {
+                        model: Author,
+                        as: 'author',
+                        attributes: ['name']
+                    }
+                ]
             });
             if (article) {
                 res.json(article);
