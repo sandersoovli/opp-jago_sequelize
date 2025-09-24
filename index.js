@@ -2,37 +2,17 @@ const express = require('express');
 const app = express();
 
 const articleRouter = require('./routes/article');
-// Middleware to parse JSON bodies
+const ArticleController = require('./controllers/article');
+
+// Middleware JSON parsinguks
 app.use(express.json());
 
-//connecting article routes
-app.use('/articles', articleRouter);
+app.get('/', ArticleController.getAllArticles);
 
-/* Database connection setup (example with Sequelize)
-const { Sequelize } = require('sequelize');*/
+// Kõik artiklid root URL-is suunatakse routerisse
+app.use('/article', articleRouter);
 
-
-/*const sequelize = new Sequelize('joga_sequelize', 'root', 'qwerty', {
-  host: 'localhost',
-  dialect: 'mysql' 
-});*/
-
-/*sequelize.authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');   
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });*/
-    
-// Sample route
-app.get('/', (req, res) => {
-  res.json({message: 'Welcome to sequelize app'});
-});
-
-
-
-// Start the server
+// Server start
 app.listen(3025, () => {
   console.log('Server is running at http://localhost:3025');
 });

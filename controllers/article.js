@@ -1,5 +1,6 @@
 const db = require('../models');
 const Article = db.Article;
+const { Op } = require('sequelize');
 
 class ArticleController {
 
@@ -14,10 +15,12 @@ class ArticleController {
         }
     }
 
-    // artikkel slug-i järgi
+    // konkreetne artikkel slug-i järgi
     async getArticleBySlug(req, res) {
         try {
-            const article = await Article.findOne({ where: { slug: req.params.slug } });
+            const article = await Article.findOne({
+                where: { slug: { [Op.eq]: req.params.slug }}  // Võid kasutada ka { [Op.eq]: req.params.slug } kui soovid
+            });
             if (article) {
                 res.json(article);
             } else {

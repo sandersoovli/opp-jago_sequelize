@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ArticleController = require('../controllers/article');
 
-// Create a new article
+// Get all articles
 router.get('/', ArticleController.getAllArticles);
 
 // Get an article by slug
