@@ -11,6 +11,7 @@ app.get('/', ArticleController.getAllArticles);
 
 // Kõik artiklid root URL-is suunatakse routerisse
 app.use('/article', articleRouter);
+app.use('/author', require('./routes/author'));
 
 // Server start
 app.listen(3025, () => {
