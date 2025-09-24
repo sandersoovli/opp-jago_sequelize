@@ -5,10 +5,18 @@ module.exports = (sequelize, DataTypes) => {
   class Article extends Model {
     static associate(models) {
       // iga artikli juurde üks autor
+      
       Article.belongsTo(models.Author, {
         foreignKey: 'author_id', // seos väljal author_id
         as: 'author'             // alias, mida kasutame include-s
       });
+
+      // iga artikkel võib omada mitu silti (many-to-many)
+  Article.belongsToMany(models.Tag, {
+    through: models.ArticleTags, // liidetabel
+    as: 'tags',                  // alias, mida kasutad include-s
+    foreignKey: 'articleId'
+  });
     }
   }
 
